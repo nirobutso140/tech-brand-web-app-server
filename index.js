@@ -44,7 +44,7 @@ async function run() {
     const query = {
       brand: id,
     };
-    const result  = await productsCollection.findOne(query);
+    const result  = await productsCollection.find(query).toArray();
     res.send(result);
     
     // const result = await cursor.toArray();
