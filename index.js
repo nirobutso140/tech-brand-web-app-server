@@ -47,11 +47,20 @@ async function run() {
       res.send(result)
     })
 
-    // app.post('/update/:id', async (req, res) => {
-    //   const myCart = req.body;
-    //   console.log(myCart);
-    // })
-
+    app.get('/mycart', async (req, res) => {
+      const result = await cartDataCollection.find().toArray();
+      res.send(result);
+    })
+    
+    app.delete("/delete/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("delete", id);
+      const query = {
+        _id:  new ObjectId(id),
+      };
+      const result = await cartDataCollection.deleteOne(query);
+      res.send(result);
+    });
 
 
     app.get('/products', async (req, res) => {
@@ -79,7 +88,7 @@ async function run() {
       const query = {
           _id:  new ObjectId(id),
       };
-      const result = await productsCollection.find(query).toArray();
+      const result = await productsCollection.findOne(query);
       res.send(result);
       
     })
@@ -115,6 +124,10 @@ async function run() {
         const sendUpdatedProduct = await productsCollection.updateOne(filter, updatedProduct)
         res.send(sendUpdatedProduct)
     })
+
+
+
+
 
 
     // app.get("/products", async (req, res) => {
