@@ -56,7 +56,7 @@ async function run() {
       const id = req.params.id;
       console.log("delete", id);
       const query = {
-        _id:  new ObjectId(id),
+        _id: (id),
       };
       const result = await cartDataCollection.deleteOne(query);
       res.send(result);
@@ -74,7 +74,7 @@ async function run() {
     app.get('/products/:id', async (req, res) => {
       const id = req.params.id;
       const query = {
-        brand: id,
+        brand: {$regex: id, $options: "i"},
       };
       const result = await productsCollection.find(query).toArray();
       res.send(result);
